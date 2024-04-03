@@ -1,8 +1,7 @@
 USE md_water_services;
-/*Part 4
-	Joining Location to visits and to water source*/
+/*Part 4 Joining Location to visits and to water source*/
 SELECT
-	loc.province_name,
+    loc.province_name,
     loc.town_name,
     vis.visit_count,
     loc.location_id,
@@ -20,11 +19,10 @@ ON
 	ws.source_id = vis.source_id
 WHERE 
 	vis.visit_count = 1;
-/*Removing Location ID and visit count
-  adding location type and time in queue*/
+/*Removing Location ID and visit count adding location type and time in queue*/
 SELECT
-	loc.province_name,
-	loc.town_name,
+    loc.province_name,
+    loc.town_name,
     loc.location_type,
     vis.time_in_queue,
     ws.type_of_water_source,
@@ -43,8 +41,8 @@ WHERE
 	vis.visit_count = 1;
 /*Joining well pollution table*/
 SELECT
-	loc.province_name,
-	loc.town_name,
+    loc.province_name,
+    loc.town_name,
     loc.location_type,
     vis.time_in_queue,
     ws.type_of_water_source,
@@ -70,8 +68,8 @@ WHERE
 /*Creating views*/
 CREATE VIEW Combined_analysis As 
 (SELECT
-	loc.province_name,
-	loc.town_name,
+    loc.province_name,
+    loc.town_name,
     loc.location_type,
     vis.time_in_queue,
     ws.type_of_water_source,
@@ -95,8 +93,7 @@ WHERE
 	vis.visit_count = 1
 );
 
-/* The last analysis
- #Copied from Chidis query code*/
+/* The last analysis #Chidis query code*/
 WITH province_totals AS (-- This CTE calculates the population of each province
 SELECT
 province_name,
@@ -251,11 +248,11 @@ Comments TEXT /*Engineers can leave comments. We use a TEXT type that has no lim
 
 /*Analysis of the practical plan*/
 SELECT
-	water_source.source_id,
+    water_source.source_id,
     location.address,
-	location.town_name AS Town,
-	location.province_name AS Province,
-	water_source.type_of_water_source AS source_type,	
+    location.town_name AS Town,
+    location.province_name AS Province,
+    water_source.type_of_water_source AS source_type,	
     CASE WHEN (type_of_water_source = "well") AND results = "Contaminated: Biological"
     THEN "Install RO filter and UV filter"
     WHEN (type_of_water_source = "well") AND results = "Contaminated: Chemical"
